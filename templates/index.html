@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<title>{{profile.name}} - CV</title>
+<link rel="stylesheet" type="text/css" href="{% static '/css/styles.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="cv-container">
+    <aside class="left-section">
+        <div class="profile-pic">
+            <img src="{{profile.profile_pic.url}}" alt="Logo">
+        </div>
+        <div class="name-title">
+            <h1>{{profile.name}}</h1>
+            <p>{{profile.bio}}</p>
+        </div>
+        <div class="skills">
+            
+            <div class="skills">
+                {%for skill in skills%}
+                <span>{{skill.title}}</span>
+                {% endfor %}
+              
+                
+            </div>
+        </div>
+        <div class="contact-info">
+            <ul>
+                <li><a href="mailto:{{profile.email}}" ><img class="logo" src="{% static 'images/email.png' %}" alt="mail">{{profile.email}}</li></a>
+
+                <li><img class = "logo"src="{% static 'images/location.png' %}" alt="location">{{profile.address}}</li>
+            </ul>
+        </div>
+        <div class="social-media">
+            <h3>FOLLOW ME</h3>
+            <ul>
+                
+                <li><a href="{{link.github}}" target="_blank"><img class="logo" src="{% static 'images/github.png' %}" alt="">GitHub</a></li>
+                <li><a href="{{link.linkedin}}" target="_blank"><img class="logo" src="{% static 'images/linkedin.png' %}" alt="">Linkedin</a></li>
+                <li><a href="{{link.instagram}}" target="_blank"><img class="logo" src="{% static 'images/instagram.png' %}" alt="">Instagram</a></li>
+                <li><a href="{{link.facebook}}" target="_blank"><img class="logo" src="{% static 'images/facebook.png'%}" alt="">Facebook</a></li>
+                <li><a href="{{link.spotify}}"
+                        target="_blank"><img class="logo" src="{% static 'images/spotify.png'%}" alt="">Spotify</a>
+                    </li>
+                    <li>
+                        <a><img class="logo" src="{% static 'images/discord.png'%}" alt="">{{link.discord}}</a>
+                    </li>
+                    <li>
+                    <a href="{{link.website}}" target="">
+                        <img class="logo" src="{% static 'images/website.png'%}" alt="">Website 
+                        <img src="{{link.webqr.url}}" class = "qr" alt="qr">
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </div>
+    </aside>
+    <main class="right-section">
+        
+        <section class="objective">
+            <h2>OBJECTIVE</h2>
+            <p>
+               {{desc.objective}}
+            </p>
+        </section>
+        <section class="education">
+            <h2>EDUCATION</h2>
+            {% for edu in education  %}
+            <div class="education-item">
+                <div class="edu-program">{{edu.degree}}</div>
+                <ul>
+                    <li>
+                        <p>{{edu.college}}</p>
+                    </li>
+                    <li>
+                        <p>
+                            
+                            {% if edu.score_type == "GPA" %}
+                            GPA: {{edu.score}}
+                            {% elif edu.score_type == "PERCENTAGE" %}
+                            {{edu.score}}%
+                            {% endif %}
+                                
+                            
+                           &nbsp; &nbsp;<i>{{edu.from_date}} - {{edu.to_date|default:"Present"}} </i></p>
+                    </li>
+                    
+                </ul>
+            </div>
+            {% endfor %}
+
+        </section>
+        <section class="projects">
+            <h2>PROJECTS</h2>
+            {% for project in projects %}
+            <div class="project-item">
+
+                <h3>{{project.title}}</h3>
+                <p>{{project.desc}}</p>
+                {% if project.link %}
+                    <a href="{{project.link}}" target="">View Project</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+        </section>
+        <section class="activities">
+            <h2>ACTIVITIES</h2>
+            <p>
+               {{desc.activities}}
+            </p>
+        </section>
+    </main>
+</div>
+{% endblock %}
